@@ -1,7 +1,7 @@
 const LivingCreature = require("./livingCreature")
 const random = require("./random")
 
-module.exports = class GrassEater extends LivingCreature {
+module.exports = class Gishatich extends LivingCreature {
     constructor(x, y, index) {
         super(x, y, index)
         this.energy = 8
@@ -18,7 +18,6 @@ module.exports = class GrassEater extends LivingCreature {
             [this.x + 1, this.y + 1]
         ];
     }
-
     chooseCell(character) {
         this.getNewCoordinates()
         return super.chooseCell(character)
@@ -26,8 +25,8 @@ module.exports = class GrassEater extends LivingCreature {
     mul() {
         var newCell = random(this.chooseCell(0));
         if (newCell) {
-            var newGrassEater = new GrassEater(newCell[0], newCell[1], this.index);
-            grassEaterArr.push(newGrassEater);
+            var newVirus = new Virus(newCell[0], newCell[1], this.index);
+            virusArr.push(newVirus);
             matrix[newCell[1]][newCell[0]] = 2;
             this.energy = 8
         }
@@ -38,11 +37,10 @@ module.exports = class GrassEater extends LivingCreature {
         let emptyCells = this.chooseCell(0)
         let newCell = random(emptyCells)
         if (newCell) {
-
             let newX = newCell[0]
             let newY = newCell[1]
             matrix[this.y][this.x] = 0
-            matrix[newY][newX] = 2
+            matrix[newY][newX] = 3
             this.x = newX
             this.y = newY
         }
@@ -59,12 +57,12 @@ module.exports = class GrassEater extends LivingCreature {
             matrix[this.y][this.x] = 0
             let newX = food[0]
             let newY = food[1]
-            matrix[food[1]][food[0]] = 2
+            matrix[food[1]][food[0]] = 3
             this.x = newX
             this.y = newY
-            for (var i in grassArr) {
-                if (newX == grassArr[i].x && newY == grassArr[i].y) {
-                    grassArr.splice(i, 1);
+            for (var i in grassEaterArr) {
+                if (newX == grassEaterArr[i].x && newY == grassEaterArr[i].y) {
+                    grassEaterArr.splice(i, 1);
                     break;
                 }
             }
@@ -80,9 +78,9 @@ module.exports = class GrassEater extends LivingCreature {
         console.log("merav");
 
         matrix[this.y][this.x] = 0
-        for (var i in grassEaterArr) {
-            if (this.x == grassEaterArr[i].x && this.y == grassEaterArr[i].y) {
-                grassEaterArr.splice(i, 1);
+        for (var i in virusArr) {
+            if (this.x == virusArr[i].x && this.y == virusArr[i].y) {
+                virusArr.splice(i, 1);
                 break;
             }
         }
